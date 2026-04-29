@@ -1,0 +1,9 @@
+apiVersion: snapshot.storage.k8s.io/v1
+kind: volumeSnapshot
+metadata:
+  name: anisa-pvc-snapshot
+  namespace: anisa
+spec:
+  volumeSnapshotClassName: hostpath-csi-snapclass
+  source: 
+    persistentVolumeClaimName: anisa-pvc

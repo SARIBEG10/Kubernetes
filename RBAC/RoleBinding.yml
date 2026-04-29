@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+    name: reader-pod
+    namespace: anisa
+subjects:
+  - kind: User
+    name: Jane
+    apiGroups: [""]
+roleRef:
+  - kind: Role
+    name: pods-reader
+    apiGroup: rbac.authorization.k8s.io/v1

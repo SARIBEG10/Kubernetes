@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sms
+  namespace: prod
+spec:
+  type: ExternalName
+  externalName: sms.gateway.com

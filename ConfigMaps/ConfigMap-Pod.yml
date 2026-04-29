@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Pod
+metadata: 
+  name: alpine
+  namespace: anisa
+  labels:
+    app: alpine
+spec:
+  containers:
+    - name: test
+      image: alpine:18
+      resources:
+      limits:
+        cpu: 200m
+        memory: 500Mi
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      env:
+        - name: PLAYERS_INITIAL_VALUES
+          valueFrom:
+            configMapKeyRef:
+               name: game-demo-variables
+               key: "players_initial_values"
+
+        - name: Game_Resolution
+          valueFrom:
+            configMapKeyRef:
+              name: game-demo-variables
+              key: "game_resolution"
+      volumeMounts:
+        - name: config
+          path: "/config"
+          readOnly: true
+  volumes:
+     - name: config
+       configMap:
+        name: game-demo-file
+        items:
+          - key: "game.properties"
+            path: "vijeghihaye-bazi"
+
+          - key: "user-interfaces.properties"
+            path: "vijeghihaye-tasviri"

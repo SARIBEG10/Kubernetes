@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service1
+  namespace: anisa
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      tarrgetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: service1
+  namespace: test
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      tarrgetPort: 80
+
+---
+# from service1 in ns: anisa  TO service1 in ns: test
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  namespace: anisa
+spec: 
+  type: ExternalName
+  externalName: service1.test.svc.cluster.local  # or service1.test  # svc.cluster.local is static part of domain default in kubernetes DNS 
+
+---
+# from service1 in ns: test  TO service1 in ns: anisa
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: my-service
+  namespace: test
+spec: 
+  type: ExternalName
+  externalName: service1.anisa.svc.cluster.local

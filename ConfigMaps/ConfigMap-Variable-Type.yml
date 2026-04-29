@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: game-demo-variables
+  namespace: anisa
+data:
+  players_initial_values: "3"
+  game_resolution: "dark"

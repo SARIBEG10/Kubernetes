@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Pod
+metadata:
+  name: nginx-sazmani
+  annotations:
+     key: value # annotations must be readable for containers
+  namespace: anisa
+  labels:
+    app: mynginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    resources:
+      limits:
+        cpu: 200m
+        memory: 500Mi
+      requests:
+        cpu: 100m
+        memory: 200Mi
+    initContainers:  # initcontainers part must be subject of containers
+      - name: nginx-init-container
+        image: busybox
+        command: ["/bin/sh","-c","echo'Nginx Init Container'"]
+    ephemeralContainers:
+      - name: nginx-ephemeral-container
+        image: busybox
+        command: ["/bin/sh","-c","echo'Nginx Ephemeral Container'"]
+    env:
+    - name: DB_HOST
+      valueFrom:
+        configMapKeyRef:
+          name: MYAPP
+          key: DB_HOST
+    ports:
+    - containerPort:  80
+      name:  http
+    volumeMounts:
+    - name: localtime
+      mountPath: /etc/localtime
+  volumes:
+    - name: localtime
+      hostPath:
+        path: /usr/share/zoneinfo/Asia/Shanghai
+  restartPolicy: Always

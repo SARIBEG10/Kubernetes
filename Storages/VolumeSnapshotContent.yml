@@ -1,0 +1,12 @@
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnashotContent
+metadata:
+  name: anisa-snapshot
+spec:
+  deletionPolicy: Delete
+  driver: hostpath.csi.k8s.io
+  source:
+    snapshotHandle: 700d-8902-a5443-bd533-445kd2234
+  volumeSnapshotRef:
+    name: anisa-pvc-snapshot
+    namespace: anisa

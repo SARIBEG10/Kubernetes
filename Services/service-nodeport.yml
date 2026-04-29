@@ -1,0 +1,23 @@
+
+# NodePort USAGE:
+
+# some of cloud providers load balancers only send request to nodeport on the service, which we describe
+# for inside of cluster traffic routing  and ports wew specified for nodeport must be 30000-32767 (in apiserver configuration
+# file we can change this port range)
+
+# NodePort also used for direct connection from outside to pod for tshoot purposes
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-service
+  namespace: anisa
+spec:
+  selector:
+    app: nginx
+  type: NodePort
+  ports:
+    - name: http-cloud-load-balancer
+      port: 80
+      targetPort: 80
+      nodePort: 31000 

@@ -1,0 +1,9 @@
+# Create secrets-reader Group for all namespaces in cluster for binding to single user or users or group or groups or SA s
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+    name: secrets-reader
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "watch", "list"]

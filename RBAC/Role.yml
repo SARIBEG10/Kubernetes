@@ -1,0 +1,10 @@
+# Create pods-reader Group for binding to the users, groups or serviceaccounts
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+    name: pods-reader
+    namespace: anisa
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "watch", "list"] 

@@ -1,0 +1,21 @@
+NOTE: NetworkPolicies doesnt work by default , it Depends on Network Model which we choose in k8s cluster installation
+that Model should be support SecurityPolicy features to make NetworkPolicies Enabled on k8s cluster
+
+
+
+NetworkPolicies: used to manage and controll ingress and egress traffic of POD => Its work Like SoftFirewalls,
+This Policies Applied Between POD and Service components for managing ingress and egress Traffics of POD
+
+
+Ingress: Traffic which is coming from outside to POD Blocked
+Egress: Traffic which is Initiated by POD Blocked
+
+Isolated Vs Non-Isolated PODs:
+
+Non-Isolated: all componaents deployed and installed on k8s cluster is Non-Isolated it means traffics open ANY-to-ANY on all components 
+od k8s cluster
+
+Full-Isolated: close all ingress and egress traffics to POD
+
+
+

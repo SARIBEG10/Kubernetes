@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: game-demo
+  namespace: anisa
+data:
+   players_initial_values: "3"
+   ui-interfaces-properties: "Allow"
+   

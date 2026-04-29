@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: StatefulSet
+metadata:
+  name: anisa-st
+  namespace: anisa
+spec:
+  serviceName: "nginx"
+  replicas: 1
+  selector:
+    matchLabels:
+      "app: mynginx"
+  template:
+    metadata:
+      labels:
+        app: mynginx
+    spec:
+      containers:
+        - name: web
+          image: mysql
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          volumeMounts:
+            - name: myvol
+              mountPath: "/home/sari"
+  volumeClaimTemplates:
+    metadata:
+      name: myvol
+    spec:
+      accessModes: ["ReadWriteOnce"] 
+      storageClassName: anisa-storage
+      persistentVolumeReclaimPolicy: Retain
+      resources:
+        requests:
+          storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "nginx"
+spec:
+  selector:
+    app: mynginx
+  type: ClusterIP
+  ClusterIP: None
+  ports:
+     - name: DB
+       port: 3310
+       targetPort: 3306
+
+    

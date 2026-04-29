@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Service
+metadata:
+    name: my-service
+    namespace: anisa
+spec:
+  selector:
+    app: nginx
+  type: ClusterIP
+  sessionAffinity: None
+  sessionAffinityConfig:
+      clientIP:
+          timeoutSeconds: 300
+  ports: 
+  # if we have multiple ports its mandatory to set names for them 
+    - name: http
+      protocol: UDP
+      port: 80
+      targetPort: 9376
+    
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 9377

@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: anisa
+  name: nginx
+  labels:
+    app: nginx-sts
+spec:
+  strategy:
+    type: OnDelete
+    rollingUpdate:
+      partition: 2
+  replicas: 1
+  serviceName: "nginx"
+  selector:
+    matchLabels:
+        app: "nginx"
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.18
+          ports:
+            - containerPort: 80
+          protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  namespace: default
+spec:
+  selector:
+    app: nginx
+  type: ClusterIP
+  ClusterIP: None
+  sessionAffinity: None
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 80 
+    # If you set the `spec.type` field to `NodePort` and you want a specific port number,
+    # you can specify a value in the `spec.ports[*].nodePort` field.
+    nodePort: 3000

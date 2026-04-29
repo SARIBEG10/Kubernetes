@@ -1,0 +1,34 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+   name: nginx-autoscaling
+   labels:
+     nginx: autoscale
+spec:
+   scaleTargetRef:
+      apiVersion: apps/v1
+      kind: Deployment
+      name: nginx-deployment
+   maxReplicas: 15
+   minReplicas: 1
+   targetCPUUtilizationPercentage: 80
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: example-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx-deployment
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50

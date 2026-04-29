@@ -1,0 +1,25 @@
+
+# LoadBalancer USAGE:
+
+# Before describe this kind of service on  k8s we should configure and install third party load balancer app(Nginx, HAProx,..) on k8s cluster 
+# then describe this kind of service to find the load balancer 
+# this lind of service automatically can find third party loadbalancer on k8s cluster
+
+
+apiVersion: v1
+kind: Service
+metadata: 
+    name: my-service
+spec:
+  selector: 
+    app: nginx
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  clusterIP: 10.202.10.203 # we can set this ip manually also on other services
+  type: LoadBalancer 
+status:
+  loadBalancer:
+    ingress:
+      - ip: 186.20.40.202 # third party loadBalancer ip address which we install on k8s cluster

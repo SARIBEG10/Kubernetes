@@ -1,0 +1,50 @@
+services:
+  myapp:
+    image: image:v1
+    stop_grace_period: 1m
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - front-tier
+      - back-tier
+    secrets:
+      - source: database-pass
+      - target: /var/lib/mysql
+    volumes:  
+      - myvol:/home
+    environment:
+      MYSQL_ROOT_PASSWORD: "12345"
+      MYSQL_USER: wordpress
+      MYSQL_DB: wordpress
+      MYSQL_DB_PASSWORD: wordpress
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        delay: 5s
+        window: 120s
+      placement:
+        constraints:
+          - "node.label = worker"
+          - "node.label.pcidss = yes"
+networks:
+  front-tier:
+  back-tier:
+    driver: overlay
+    driver-opts: 
+      encrypted: 'yes'
+secrets:
+  database-pass:
+    external: true
+  proxy-key:
+    external: true
+  proxy-cert:
+    external: true
+  
+volumes:
+  myvol:

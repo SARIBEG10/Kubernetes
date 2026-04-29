@@ -1,0 +1,3 @@
+ClusterRole: It means all roles and permissions for users working with k8s cluster  
+Role: It means all roles and permissions  for users working with specific namespace inside the k8s cluster 
+ServiceAccounts: its non-human accounts provide access for processes insidie of pods

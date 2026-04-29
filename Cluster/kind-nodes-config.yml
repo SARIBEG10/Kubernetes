@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Cluster
+nodes:
+  - role: control-plane
+  - role: control-plane
+  - role: control-plane
+  - role: worker
+  - role: worker

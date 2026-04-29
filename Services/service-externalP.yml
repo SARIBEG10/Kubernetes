@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  namespace: anisa
+spec:
+  selector:
+    app: nginx
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3767 # this is service port of externalIP which is outside of cluster NOT POD port
+  externalIPs:
+    - 80.104.20.95

@@ -12,7 +12,7 @@ spec:
   manualSelector: false
   parallelism: 1
   podReplacementPolicy: TerminatingOrFailed
-  activeDeadlineSeconds: 20 # if job in loop # حداکثر مدت زمانی (بر حسب ثانیه) که یک job مجاز به اجراست، صرف‌نظر از تعداد retry یا وضعیت پاد
+  activeDeadlineSeconds: 20 # if job stuck in loop # حداکثر مدت زمانی (بر حسب ثانیه) که یک job مجاز به اجراست، صرف‌نظر از تعداد retry یا وضعیت پاد
   ttlSecondsAfterFinished: 200 # cached job delete from etcd(database)
   template:
     metadata:
